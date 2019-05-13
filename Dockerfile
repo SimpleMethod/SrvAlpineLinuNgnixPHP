@@ -64,7 +64,7 @@ RUN ln -s /root/noVNC/vnc_lite.html /root/noVNC/index.html
 
 #Changing the configuration of the xfce4-terminal
 RUN curl -l https://raw.githubusercontent.com/SimpleMethod/Alpine-noVNC/master/xfce4-terminal/terminalrc --create-dirs  -o /root/.config/xfce4/terminal/terminalrc
-RUN chmod +x /etc/maven_package.sh
+RUN chmod +x /etc/php_package.sh
 RUN chmod +x /etc/supervisor/conf.d/exec.sh
 
 #Copying the configuration for supervisord
@@ -90,12 +90,6 @@ RUN chown -R nobody.nobody /run && \
 
 # Setup document root
 RUN mkdir -p /var/www/html
-
-# Switch to use a non-root user from here on
-USER nobody
-
-# Add application
-COPY --chown=nobody src/ /var/www/html/
 
 VOLUME ["/sys/fs/cgroup", "/root/.mozilla", "/var/lib/"]
 
