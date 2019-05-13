@@ -58,7 +58,7 @@ RUN	apk	--update --no-cache	add	bash \
 RUN ln -s /root/noVNC/vnc_lite.html /root/noVNC/index.html 
 
 #Changing the configuration of the xfce4-terminal
-RUN curl -l https://raw.githubusercontent.com/SimpleMethod/Alpine-noVNC/master/xfce4-terminal/terminalrc --create-dirs  -o /root/.config/xfce4/terminal/terminalrc
+RUN curl -l https://raw.githubusercontent.com/SimpleMethod/SrvAlpineLinuxNgnix/master/terminalrc --create-dirs  -o /root/.config/xfce4/terminal/terminalrc
 RUN chmod +x /etc/html_package.sh
 RUN chmod +x /etc/supervisor/conf.d/exec.sh
 
@@ -66,7 +66,6 @@ RUN chmod +x /etc/supervisor/conf.d/exec.sh
 COPY config/default.conf /etc/nginx/conf.d/default.conf
 
 RUN mkdir -p /run/nginx
-
 
 RUN chown -R nobody.nobody /run && \
   chown -R nobody.nobody /var/lib/nginx && \
