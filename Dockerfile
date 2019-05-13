@@ -51,38 +51,23 @@ RUN	apk	--update --no-cache	add	bash \
 	firefox-esr \
 	python \
 	py-pip \
-	openjdk8 \
-	maven \
-	gradle
+	nginx
 
-RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-curl \
-    php7-zlib php7-xml php7-phar php7-intl php7-dom php7-xmlreader php7-ctype \
-    php7-mbstring php7-gd nginx 
 	
 # Clone noVNC from Github
 RUN ln -s /root/noVNC/vnc_lite.html /root/noVNC/index.html 
 
 #Changing the configuration of the xfce4-terminal
 RUN curl -l https://raw.githubusercontent.com/SimpleMethod/Alpine-noVNC/master/xfce4-terminal/terminalrc --create-dirs  -o /root/.config/xfce4/terminal/terminalrc
-RUN chmod +x /etc/php_package.sh
+RUN chmod +x /etc/html_package.sh
 RUN chmod +x /etc/supervisor/conf.d/exec.sh
 
-#Copying the configuration for supervisord
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-
-
 # Configure nginx
-COPY config/nginx.conf /etc/nginx/nginx.conf
+COPY config/default.conf /etc/nginx/conf.d/default.conf
 
-# Configure PHP-FPM
-COPY config/fpm-pool.conf /etc/php7/php-fpm.d/www.conf
-COPY config/php.ini /etc/php7/conf.d/zzz_custom.ini
+RUN mkdir -p /run/nginx
 
-# Configure supervisord
-COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN chown -R nobody.nobody /run && \
   chown -R nobody.nobody /var/lib/nginx && \
   chown -R nobody.nobody /var/tmp/nginx && \
@@ -90,6 +75,11 @@ RUN chown -R nobody.nobody /run && \
 
 # Setup document root
 RUN mkdir -p /var/www/html
+
+RUN chown -R nobody.nobody /var/www/html
+
+#Copying the configuration for supervisord
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 VOLUME ["/sys/fs/cgroup", "/root/.mozilla", "/var/lib/"]
 
