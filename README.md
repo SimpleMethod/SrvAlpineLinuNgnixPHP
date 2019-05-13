@@ -1,6 +1,6 @@
 ### SrvAlpineLinuxOpenHTTP
 
-A pseudo virtualization system based on Alpine Linux version 3.9.4. Access via noVNC, Quick and easy to use :)
+A pseudo virtualization system based on Alpine Linux version 3.9.4. Access via noVNC, quick and easy to use :)
 
 | PACKAGE | VERSION |
 | ------ | ------ |
