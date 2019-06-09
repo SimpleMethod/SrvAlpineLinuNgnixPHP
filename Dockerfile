@@ -39,7 +39,6 @@ RUN	apk	--update --no-cache	add	bash \
 	lxappearance \
 	tint2 \
 	feh \
-	lxappearance-obconf \
 	ttf-freefont \
 	dbus-x11 \
 	unzip \
@@ -79,6 +78,8 @@ RUN chown -R nobody.nobody /var/www/html
 
 #Copying the configuration for supervisord
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+COPY cert.pem /etc/cert.pem
 
 VOLUME ["/sys/fs/cgroup", "/root/.mozilla", "/var/lib/"]
 
